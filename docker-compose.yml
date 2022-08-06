@@ -1,6 +1,6 @@
 version: '3.9'
 
-# Network for Laravel 8
+# Network for Laravel
 networks:
   web_network:
     name: laravel
