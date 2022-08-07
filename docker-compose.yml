@@ -3,7 +3,7 @@ version: '3.9'
 # Network for Laravel
 networks:
   web_network:
-    name: laravel
+    name: lrdt_laravel8
     driver: bridge
 
 services:
@@ -13,8 +13,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: laravel-app
-    container_name: laravel_app
+    image: lrdt-laravel8-app
+    container_name: lrdt_laravel8_app
     restart: always
     volumes:
       - ./src:/var/www
@@ -26,13 +26,13 @@ services:
   # MySQL Database Service
   db:
     image: mysql:8.0
-    container_name: laravel_mysql
+    container_name: lrdt_laravel8_mysql
     volumes:
       - ./mysql/data:/var/lib/mysql
       # - /var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=1234
-      - MYSQL_DATABASE=laraveldb
+      - MYSQL_DATABASE=laravel8db
       - MYSQL_USER=admin
       - MYSQL_PASSWORD=1234
     ports:
@@ -44,7 +44,7 @@ services:
   # Nginx Web Server Service
   nginx:
     image: nginx:1.19.8-alpine
-    container_name: laravel_nginx
+    container_name: lrdt_laravel8_nginx
     volumes:
       - ./src:/var/www
       - ./nginx/conf:/etc/nginx/conf.d
@@ -57,7 +57,7 @@ services:
   # Redis (caching)
   redis:
     image: redis:6.2.1-buster
-    container_name: laravel_redis
+    container_name: lrdt_laravel8_redis
     volumes: 
       - ./redis/data:/data
       # - /data
@@ -70,7 +70,7 @@ services:
   # MailHog (local mail testing)
   mailhog:
     image: mailhog/mailhog:v1.0.1
-    container_name: laravel_mailhog
+    container_name: lrdt_laravel8_mailhog
     ports:
       - 8025:8025
     restart: always
@@ -82,7 +82,7 @@ services:
     image: phpmyadmin:5.1.0-apache
     depends_on:
       - db
-    container_name: laravel_phpmyadmin
+    container_name: lrdt_laravel8_phpmyadmin
     environment:
       PMA_HOST: db
       PMA_PORT: 3306
@@ -98,8 +98,8 @@ services:
   # React App Service
   reactapp:
     build: frontend/
-    image: react-app
-    container_name: react_app
+    image: lrdt-laravel8-react-app
+    container_name: lrdt_laravel8_react_app
     volumes:
       - ./frontend:/usr/app
       - /usr/app/node_modules
